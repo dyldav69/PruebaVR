@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "XR Interaction Controller Controls",
     "maps": [
         {
@@ -215,7 +216,7 @@
                 {
                     "name": "left",
                     "id": "e1b7cebf-9197-42dd-91a0-6ec9bfa15f9f",
-                    "path": "<Keyboard>/j",
+                    "path": "<Keyboard>/l",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -226,7 +227,7 @@
                 {
                     "name": "right",
                     "id": "3c625ee8-b7f9-4125-917a-f05eab326a3e",
-                    "path": "<Keyboard>/l",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -292,7 +293,7 @@
                 {
                     "name": "",
                     "id": "32072c42-6a30-4383-8362-d65ff475c920",
-                    "path": "<Keyboard>/g",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -303,7 +304,7 @@
                 {
                     "name": "",
                     "id": "4f6dfc4a-38d9-455d-9364-3a188b0e9326",
-                    "path": "<Keyboard>/t",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
