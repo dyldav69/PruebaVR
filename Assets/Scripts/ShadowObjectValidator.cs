@@ -74,4 +74,20 @@ public class ShadowObjectValidator : MonoBehaviour
 
         Debug.Log($"<color=green>¡BLOQUEADO CON ÉXITO!</color> Diferencia final: {currentAngleDifference:F1}°");
     }
+    [Header("Transición de Nivel")]
+    public GameObject puertaONivel2; // Arrastra aquí la puerta o pared que cubre la Zona 2
+
+    private void LockInPlace()
+    {
+        completed = true;
+
+        // ... (Tu código de snapping y congelar el objeto) ...
+
+        // Abrir o activar el paso al Nivel 2
+        if (puertaONivel2 != null)
+        {
+            puertaONivel2.SetActive(false); // O puedes animarla/moverla
+            Debug.Log("<color=cyan>¡Nivel 1 completado! Acceso al Nivel 2 abierto.</color>");
+        }
+    }
 }
