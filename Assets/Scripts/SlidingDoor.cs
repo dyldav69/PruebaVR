@@ -2,39 +2,46 @@ using UnityEngine;
 
 public class SlidingDoor : MonoBehaviour
 {
+    [Header("Malla de la Puerta")]
+    [Tooltip("Arrastra aquí el objeto hijo de la puerta que se moverá hacia arriba")]
+    public Transform doorMesh;
+
     [Header("Configuración del Movimiento")]
     [Tooltip("Altura (en metros) que se elevará la puerta al abrirse")]
     public float openHeight = 3.5f;
 
-    [Tooltip("Velocidad a la que sube y baja la puerta")]
-    public float speed = 3.0f;
+    [Tooltip("Velocidad de movimiento")]
+    public float speed = 4.0f;
 
-    private Vector3 closedPosition;
-    private Vector3 openPosition;
-    private Vector3 targetPosition;
+    private Vector3 closedLocalPosition;
+    private Vector3 openLocalPosition;
+    private Vector3 targetLocalPosition;
 
     private void Start()
     {
-        // Posición actual de la puerta como estado 'Cerrada'
-        closedPosition = transform.position;
-        // Posición 'Abierta' calculada sumando la altura en el eje Y
-        openPosition = closedPosition + new Vector3(0, openHeight, 0);
-        
-        targetPosition = closedPosition;
+        // Si no se asigna en el Inspector, toma el propio objeto
+        if (doorMesh == null) doorMesh = transform;
+
+        // Guarda la posición local inicial de la puerta
+        closedLocalPosition = doorMesh.localPosition;
+        openLocalPosition = closedLocalPosition + new Vector3(0, openHeight, 0);
+        targetLocalPosition = closedLocalPosition;
     }
 
     private void Update()
     {
-        // Desplaza la puerta de manera fluida hacia la posición objetivo
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        if (doorMesh != null)
+        {
+            // Mueve la malla de forma fluida a nivel local
+            doorMesh.localPosition = Vector3.MoveTowards(doorMesh.localPosition, targetLocalPosition, speed * Time.deltaTime);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (IsPlayer(other))
         {
-            // El jugador se acerca: Abrir puerta
-            targetPosition = openPosition;
+            targetLocalPosition = openLocalPosition; // Elevar
         }
     }
 
@@ -42,8 +49,7 @@ public class SlidingDoor : MonoBehaviour
     {
         if (IsPlayer(other))
         {
-            // El jugador se aleja/pasa la puerta: Cerrar puerta
-            targetPosition = closedPosition;
+            targetLocalPosition = closedLocalPosition; // Bajar
         }
     }
 
