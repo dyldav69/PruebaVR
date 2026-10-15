@@ -12015,6 +12015,18 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 6232745470614056090, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_SkinWidth
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232745470614056090, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_SlopeLimit
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6232745470614056090, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_StepOffset
+      value: 0.7
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8780421235811849896, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
     m_RemovedGameObjects: []
@@ -14576,7 +14588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystickGiro:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Joystick Giro
       m_Type: 0
@@ -14586,7 +14598,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -8666952849799569744, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   velocidadJoystick: 90
   nombreSenal: "Se\xF1al A"
   valoresTabla:
