@@ -18,66 +18,103 @@ public class TVLimitController : MonoBehaviour
     [Header("Tolerancia")]
     public float tolerancia = 0.1f;
 
-    private bool evaluado = false;
+    private bool resultadoVisible = false;
 
     private void Start()
     {
         if (pantallaResultado != null)
             pantallaResultado.SetActive(false);
+
+        MostrarEstatica();
     }
 
     private void Update()
     {
-        if (evaluado)
-            return;
-
         if (antenaA == null || antenaB == null)
             return;
-
-        if (!antenaA.AjusteCompleto ||
-            !antenaB.AjusteCompleto)
-            return;
-
-        evaluado = true;
 
         float valorA = antenaA.ValorActual;
         float valorB = antenaB.ValorActual;
 
-        if (Mathf.Abs(valorA - valorB) <= tolerancia)
+        // Evitar mostrar un resultado al iniciar,
+        // cuando ambas antenas todavía están en su valor inicial.
+        bool ambasAvanzaron =
+            AvanzoAntena(antenaA, valorA) &&
+            AvanzoAntena(antenaB, valorB);
+
+        // Si los valores no coinciden, mostrar estática.
+        if (!ambasAvanzaron ||
+            Mathf.Abs(valorA - valorB) > tolerancia)
         {
-            float limite = (valorA + valorB) / 2f;
-
-            if (textoResultado != null)
-            {
-                textoResultado.text =
-                    "LIMITE EXISTE\n\nL = " +
-                    limite.ToString("F2");
-            }
-
-            Debug.Log("Limite existente: " + limite);
-        }
-        else
-        {
-            if (textoResultado != null)
-            {
-                textoResultado.text =
-                    "SEÑAL PERDIDA\n\nA = " +
-                    valorA.ToString("F2") +
-                    "\nB = " + valorB.ToString("F2");
-            }
-
-            Debug.Log("El limite bilateral no existe.");
+            MostrarEstatica();
+            return;
         }
 
-        // Detener la estatica y ocultar su pantalla.
+        // Si coinciden, mostrar el resultado matemático.
+        float limite = (valorA + valorB) / 2f;
+
+        if (textoResultado != null)
+        {
+            textoResultado.text =
+                "LIMITE EXISTE\n\nL = " +
+                limite.ToString("F2");
+        }
+
+        MostrarResultado();
+    }
+
+    private bool AvanzoAntena(
+        AntennaSignalController antena,
+        float valor)
+    {
+        if (antena.valoresTabla == null ||
+            antena.valoresTabla.Length == 0)
+            return false;
+
+        float valorInicial = antena.valoresTabla[0];
+
+        return valor > valorInicial + tolerancia;
+    }
+
+    private void MostrarEstatica()
+    {
+        if (pantallaResultado != null &&
+            pantallaResultado.activeSelf)
+        {
+            pantallaResultado.SetActive(false);
+        }
+
+        if (pantallaEstatica != null &&
+            !pantallaEstatica.activeSelf)
+        {
+            pantallaEstatica.SetActive(true);
+        }
+
+        if (videoEstatica != null &&
+            pantallaEstatica != null &&
+            pantallaEstatica.activeInHierarchy &&
+            !videoEstatica.isPlaying)
+        {
+            videoEstatica.Play();
+        }
+
+        resultadoVisible = false;
+    }
+
+    private void MostrarResultado()
+    {
+        if (resultadoVisible)
+            return;
+
         if (videoEstatica != null)
             videoEstatica.Stop();
 
         if (pantallaEstatica != null)
             pantallaEstatica.SetActive(false);
 
-        // Mostrar el resultado en el televisor.
         if (pantallaResultado != null)
             pantallaResultado.SetActive(true);
+
+        resultadoVisible = true;
     }
 }

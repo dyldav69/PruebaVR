@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
@@ -13,6 +14,10 @@ public class ShadowObjectValidator : MonoBehaviour
     [Header("Transición de Nivel")]
     [Tooltip("Arrastra aquí la puerta, pared o muro que bloquea el paso al Nivel 2")]
     public GameObject puertaONivel2;
+
+    [Header("Cartel de Completado")]
+    [Tooltip("Arrastra aquí el Quad que aparecerá al completar la actividad")]
+    public GameObject cartelCompletado;
 
     [Header("Diagnóstico en tiempo real (Solo Lectura)")]
     [SerializeField] private float currentAngleDifference;
@@ -68,8 +73,15 @@ public class ShadowObjectValidator : MonoBehaviour
         // 3. DESBLOQUEAR EL ACCESO AL NIVEL 2
         if (puertaONivel2 != null)
         {
-            puertaONivel2.SetActive(false); // Hace desaparecer la pared/puerta
+            puertaONivel2.SetActive(false);
             Debug.Log("<color=cyan>¡Paso al Nivel 2 desbloqueado!</color>");
+        }
+
+        // 4. MOSTRAR EL CARTEL DE COMPLETADO
+        if (cartelCompletado != null)
+        {
+            cartelCompletado.SetActive(true);
+            Debug.Log("[Actividad 1] Cartel de completado mostrado.");
         }
 
         Debug.Log($"<color=green>¡COMPLETADO!</color> Objeto bloqueado en su posición.");
